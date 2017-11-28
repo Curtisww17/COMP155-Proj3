@@ -123,15 +123,15 @@ def MakeGrid():
 def DrawGrid():
     window.fill(pink)
     if difficulty == 3:
-        pass
+        offset = 250
     if difficulty == 5:
-        pass
+        offset = 150
     if difficulty == 7:
-        pass
+        offset = 50
     for x in range(0,len(grid)):
         for y in range(0,len(grid[x])):
-            pygame.draw.rect(window, grid[x][y].color, (x*100,y*100+100,100,100))
-            window.blit(grid[x][y].shape,(x*100,y*100+100))
+            pygame.draw.rect(window, grid[x][y].color, (x*100+offset,y*100+100,100,100))
+            window.blit(grid[x][y].shape,(x*100+offset,y*100+100))
     pygame.display.update()
             
 
