@@ -96,8 +96,6 @@ def Start():
                 difficulty = 5
             elif mousex > 525 and mousex < 675:
                 difficulty = 7
-    #print(difficulty)
-
 
 class Tile(object):
     def __init__(self, shape, color):
