@@ -118,11 +118,13 @@ def MakeGrid():
             shuffleList.append(newtile)
     random.shuffle(shuffleList)
 
-    grid = list(chunks(shuffleList, 5))
+    grid = list(splitter(shuffleList, 5))
 
 
 def DrawGrid():
+    global offset
     window.fill(pink)
+    window.blit(title,titleRect)
     if difficulty == 3:
         offset = 250
     if difficulty == 5:
@@ -135,30 +137,27 @@ def DrawGrid():
             window.blit(grid[x][y].shape,(x*100+offset,y*100+100))
     pygame.display.update()
 
-def chunks(l, n):
+def splitter(l, n):
     # For item i in a range that is a length of l,
     for i in range(0, len(l), n):
-        # Create an index range for l of n items:
+        # Creates an index range for l of n items:
         yield l[i:i+n]
+
+
 
 
 Init()
 MakeGrid()
 DrawGrid()
 
-
-
 while True:
-    #window.blit(circle,(200,100))
-    #window.blit(cross,(200,200))
-    #window.blit(triangle,(200,300))
-    #window.blit(square,(200,400))
-    #window.blit(pentagon,(200,500))
-    #window.blit(hexagon,(200,0))
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
         if event.type == MOUSEBUTTONUP:
-            pass
+            mousex,mousey = event.pos
+            mousex = (mousex - offset) // 100
+            mousey = (mousey - 100) // 100
+
     pygame.display.update()
