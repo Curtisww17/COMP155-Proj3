@@ -123,7 +123,7 @@ def MakeGrid():
         #grid.append(minilist)
     random.shuffle(testlist)
 
-    grid = list(chunks(testlist, difficulty))
+    grid = list(chunks(testlist, 5))
     #for item in testlist:
     #    if
 
