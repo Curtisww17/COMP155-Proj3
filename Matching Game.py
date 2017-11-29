@@ -180,6 +180,9 @@ while True:
         counter1 = 0
         moves -= 1
         print(moves)
+        moves = font2.render(moves,True, (0,0,0))
+        movesRect = moves.get_rect()
+        movesRect.center = (200,135)
 
     if counter1 == 1:
         gridx,gridy = xcoord,ycoord
