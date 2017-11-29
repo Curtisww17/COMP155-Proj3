@@ -3,7 +3,8 @@ from pygame.locals import *
 
 
 def Init():
-    global window, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
+    global window, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus
+    global purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text, moves
     pygame.init()
     window = pygame.display.set_mode((800,600))
     pygame.display.set_caption('Matching Game')
@@ -113,6 +114,7 @@ def MakeGrid():
     if difficulty == 7:
         shapelist = [circle, cross, triangle, square, pentagon, hexagon, rhombus]
 
+    moves = difficulty*5
     for shape in shapelist:
         for color in colorlist:
             newtile = Tile(shape, color)
@@ -175,6 +177,8 @@ while True:
         DrawGrid()
         winChecker()
         xcoord,ycoord,gridx,gridy = -1,-1,-1,-1
+        moves -= 1
+        print(moves)
     if counter1 % 2 ==1:
         gridx,gridy = xcoord,ycoord
     pygame.display.update()
