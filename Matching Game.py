@@ -103,9 +103,7 @@ class Tile(object):
 
 def MakeGrid():
     global grid
-    testlist = []
-    grid = []
-    minilist = []
+    shuffleList = []
     colorlist = [red, yellow, green, blue, purple]
     if difficulty == 3:
         shapelist = [circle, cross, triangle]
@@ -115,19 +113,12 @@ def MakeGrid():
         shapelist = [circle, cross, triangle, square, pentagon, hexagon, rhombus]
 
     for shape in shapelist:
-        #minilist = []
         for color in colorlist:
             newtile = Tile(shape, color)
-            testlist.append(newtile)
-        #    minilist.append(newtile)
-        #grid.append(minilist)
-    random.shuffle(testlist)
+            shuffleList.append(newtile)
+    random.shuffle(shuffleList)
 
-    grid = list(chunks(testlist, 5))
-    #for item in testlist:
-    #    if
-
-
+    grid = list(chunks(shuffleList, 5))
 
 
 def DrawGrid():
