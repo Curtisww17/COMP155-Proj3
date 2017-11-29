@@ -125,7 +125,7 @@ def MakeGrid():
 
 
 def DrawGrid():
-    global offset
+    global offset, moves1, movesRect
     window.fill(pink)
     window.blit(title,titleRect)
     if difficulty == 3:
@@ -139,6 +139,11 @@ def DrawGrid():
             pygame.draw.rect(window, grid[x][y].color, (x*100+offset,y*100+100,100,100))
             window.blit(grid[x][y].shape,(x*100+offset,y*100+100))
     pygame.display.update()
+
+    moves1 = font2.render(str(moves),True, (0,0,0))
+    movesRect = moves1.get_rect()
+    movesRect.center = (100,50)
+    window.blit(moves1, movesRect)
 
 def splitter(l, n):
     # For item i in a range that is a length of l,
@@ -180,9 +185,10 @@ while True:
         counter1 = 0
         moves -= 1
         print(moves)
-        moves = font2.render(moves,True, (0,0,0))
-        movesRect = moves.get_rect()
-        movesRect.center = (200,135)
+        moves1 = font2.render(str(moves),True, (0,0,0))
+        movesRect = moves1.get_rect()
+        movesRect.center = (100,50)
+        window.blit(moves1, movesRect)
 
     if counter1 == 1:
         gridx,gridy = xcoord,ycoord
