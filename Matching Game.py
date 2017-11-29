@@ -9,8 +9,8 @@ def Init():
     pygame.display.set_caption('Matching Game')
     font1 = pygame.font.SysFont('broadway',40)
     font2 = pygame.font.SysFont('broadway',24)
-    
-    
+
+
 
     purple = (205,205,255)
     green = (205,255,205)
@@ -25,8 +25,8 @@ def Init():
     titleRect = title.get_rect()
     titleRect.center = (400,50)
 
-    
-    
+
+
     circle = pygame.transform.scale(pygame.image.load('circle.png'),(100,100))
     cross = pygame.transform.scale(pygame.image.load('cross.png'),(100,100))
     triangle = pygame.transform.scale(pygame.image.load('triangle.png'),(100,100))
@@ -40,14 +40,14 @@ def Init():
 
     Start()
 
-    
-    
 
-    
+
+
+
 def Start():
     global difficulty
     mousex,mousey = 0,0
-    
+
     window.fill(blue)
     pygame.draw.rect(window, purple, (100,100, 600, 400))
     pygame.draw.rect(window, green, (125,175, 150, 300))
@@ -57,19 +57,19 @@ def Start():
     diff = font2.render(text[1],True, (0,0,0))
     diffRect = diff.get_rect()
     diffRect.center = (400,125)
-    
+
     easy = font2.render(text[2],True, (0,0,0))
     easyRect = easy.get_rect()
     easyRect.center = (200,300)
-    
+
     med = font2.render(text[3],True, (0,0,0))
     medRect = med.get_rect()
     medRect.center = (400,300)
-    
+
     hard = font2.render(text[4],True, (0,0,0))
     hardRect = hard.get_rect()
     hardRect.center = (600,300)
-    
+
 
     window.blit(title,titleRect)
     window.blit(diff,diffRect)
@@ -78,7 +78,7 @@ def Start():
     window.blit(hard,hardRect)
 
     pygame.display.update()
-    
+
     while difficulty == 0:
         for event in pygame.event.get():
             if event.type == QUIT:
@@ -94,8 +94,8 @@ def Start():
             elif mousex > 525 and mousex < 675:
                 difficulty = 7
     #print(difficulty)
-    
-    
+
+
 class Tile(object):
     def __init__(self, shape, color):
         self.shape = shape
@@ -103,6 +103,7 @@ class Tile(object):
 
 def MakeGrid():
     global grid
+    testlist = []
     grid = []
     minilist = []
     colorlist = [red, yellow, green, blue, purple]
@@ -114,11 +115,20 @@ def MakeGrid():
         shapelist = [circle, cross, triangle, square, pentagon, hexagon, rhombus]
 
     for shape in shapelist:
-        minilist = []
+        #minilist = []
         for color in colorlist:
             newtile = Tile(shape, color)
-            minilist.append(newtile)
-        grid.append(minilist)
+            testlist.append(newtile)
+        #    minilist.append(newtile)
+        #grid.append(minilist)
+    random.shuffle(testlist)
+
+    grid = list(chunks(testlist, difficulty))
+    #for item in testlist:
+    #    if
+
+
+
 
 def DrawGrid():
     window.fill(pink)
@@ -133,7 +143,12 @@ def DrawGrid():
             pygame.draw.rect(window, grid[x][y].color, (x*100+offset,y*100+100,100,100))
             window.blit(grid[x][y].shape,(x*100+offset,y*100+100))
     pygame.display.update()
-            
+
+def chunks(l, n):
+    # For item i in a range that is a length of l,
+    for i in range(0, len(l), n):
+        # Create an index range for l of n items:
+        yield l[i:i+n]
 
 
 Init()
