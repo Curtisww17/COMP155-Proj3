@@ -157,7 +157,10 @@ while True:
             sys.exit()
         if event.type == MOUSEBUTTONUP:
             mousex,mousey = event.pos
-            mousex = (mousex - offset) // 100
-            mousey = (mousey - 100) // 100
+            if mousex > offset and mousex < offset + (difficulty*100):
+                if mousey > 100 and mousey < 600:
+                    mousex = (mousex - offset) // 100
+                    mousey = (mousey - 100) // 100
+                    print(mousex,mousey)
 
     pygame.display.update()
