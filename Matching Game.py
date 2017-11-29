@@ -3,13 +3,16 @@ from pygame.locals import *
 
 
 def Init():
-    global window, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
+    global window, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
     pygame.init()
     window = pygame.display.set_mode((800,600))
     pygame.display.set_caption('Matching Game')
     font1 = pygame.font.SysFont('broadway',40)
     font2 = pygame.font.SysFont('broadway',24)
-
+    movecounter = 0
+    counter1 = 0
+    xcoord,ycoord = -1,-1
+    gridx, gridy = -1,-1
 
 
     purple = (205,205,255)
@@ -143,6 +146,9 @@ def splitter(l, n):
         # Creates an index range for l of n items:
         yield l[i:i+n]
 
+def winChecker():
+    pass
+
 
 
 
@@ -159,8 +165,18 @@ while True:
             mousex,mousey = event.pos
             if mousex > offset and mousex < offset + (difficulty*100):
                 if mousey > 100 and mousey < 600:
-                    mousex = (mousex - offset) // 100
-                    mousey = (mousey - 100) // 100
-                    print(mousex,mousey)
+                    xcoord = (mousex - offset) // 100
+                    ycoord = (mousey - 100) // 100
+                    if xcoord != gridx or ycoord != gridy:
+                        counter1 += 1
 
+    if counter1 % 2 == 0:
+        tile = grid[xcoord][ycoord]
+        grid[xcoord][ycoord] = grid[gridx][gridy]
+        grid[gridx][gridy] = tile
+        DrawGrid()
+        winChecker()
+        xcoord,ycoord,gridx,gridy = -1,-1,-1,-1
+    if counter1 % 2 ==1:
+        gridx,gridy = xcoord,ycoord
     pygame.display.update()
