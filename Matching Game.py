@@ -177,8 +177,9 @@ while True:
         DrawGrid()
         winChecker()
         xcoord,ycoord,gridx,gridy = -1,-1,-1,-1
-        moves -= 1
-        print(moves)
+
     if counter1 % 2 ==1:
         gridx,gridy = xcoord,ycoord
+        moves -= 1
+        print(moves)
     pygame.display.update()
