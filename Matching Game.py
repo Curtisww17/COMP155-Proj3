@@ -4,7 +4,7 @@ from pygame.locals import *
 
 def Init():
     global window, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus
-    global purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text, moves
+    global purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
     pygame.init()
     window = pygame.display.set_mode((800,600))
     pygame.display.set_caption('Matching Game')
@@ -104,7 +104,7 @@ class Tile(object):
         self.color = color
 
 def MakeGrid():
-    global grid
+    global grid, moves
     shuffleList = []
     colorlist = [red, yellow, green, blue, purple]
     if difficulty == 3:
