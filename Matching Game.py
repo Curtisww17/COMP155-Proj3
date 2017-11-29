@@ -170,16 +170,18 @@ while True:
                     if xcoord != gridx or ycoord != gridy:
                         counter1 += 1
 
-    if counter1 % 2 == 0:
+    if counter1 == 2:
         tile = grid[xcoord][ycoord]
         grid[xcoord][ycoord] = grid[gridx][gridy]
         grid[gridx][gridy] = tile
         DrawGrid()
         winChecker()
         xcoord,ycoord,gridx,gridy = -1,-1,-1,-1
-
-    if counter1 % 2 ==1:
-        gridx,gridy = xcoord,ycoord
+        counter1 = 0
         moves -= 1
         print(moves)
+
+    if counter1 == 1:
+        gridx,gridy = xcoord,ycoord
+
     pygame.display.update()
