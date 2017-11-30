@@ -184,7 +184,7 @@ while True:
         xcoord,ycoord,gridx,gridy = -1,-1,-1,-1
         counter1 = 0
         moves -= 1
-        print(moves)
+        pygame.draw.rect(window, pink, (75,0,100,100))
         moves1 = font2.render(str(moves),True, (0,0,0))
         movesRect = moves1.get_rect()
         movesRect.center = (100,50)
