@@ -3,8 +3,7 @@ from pygame.locals import *
 
 
 def Init():
-    global window, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus
-    global purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
+    global window, win, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
     pygame.init()
     window = pygame.display.set_mode((800,600))
     pygame.display.set_caption('Matching Game')
@@ -14,6 +13,7 @@ def Init():
     counter1 = 0
     xcoord,ycoord = -1,-1
     gridx, gridy = -1,-1
+    win = False
 
 
     purple = (205,205,255)
@@ -152,9 +152,18 @@ def splitter(l, n):
         yield l[i:i+n]
 
 def winChecker():
-    pass
-
-
+    global win
+    counter2 = 0
+    for smalllist in grid:
+        if all(smalllist[0].shape == item.shape for item in smalllist):
+            for item in grid[0]:
+                if all(item.color == grid[integer][grid[0].index(item)].color for integer in range(1,difficulty)):
+                    counter2 += 1
+    print(counter2)
+    print(win)
+    if counter2 == 5*difficulty:
+        win = True
+    
 
 
 Init()
@@ -189,6 +198,8 @@ while True:
         movesRect = moves1.get_rect()
         movesRect.center = (100,50)
         window.blit(moves1, movesRect)
+        if win == True:
+            print("you win")
 
     if counter1 == 1:
         gridx,gridy = xcoord,ycoord
