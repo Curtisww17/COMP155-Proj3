@@ -159,8 +159,6 @@ def winChecker():
             for item in grid[0]:
                 if all(item.color == grid[integer][grid[0].index(item)].color for integer in range(1,difficulty)):
                     counter2 += 1
-    print(counter2)
-    print(win)
     if counter2 == 5*difficulty:
         win = True
     
