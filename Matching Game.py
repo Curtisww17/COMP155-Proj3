@@ -23,7 +23,7 @@ def Init():
     red = (255,75,75)
     yellow = (255,255,125)
 
-    text = ['Matching Game','Select Difficulty','Easy','Medium','Hard']
+    text = ['Matching Game','Select Difficulty','Easy','Medium','Hard', 'You Win! Play Again?', 'You Lose. Try Again?']
 
     title = font1.render(text[0],True, (0,0,0))
     titleRect = title.get_rect()
@@ -161,7 +161,66 @@ def winChecker():
                     counter2 += 1
     if counter2 == 5*difficulty:
         win = True
-    
+
+def reset():
+    global win, difficulty
+    win = False
+    difficulty = 0
+
+def winScreen():
+    global difficulty
+    mousex,mousey = 0,0
+
+    window.fill(blue)
+    pygame.draw.rect(window, purple, (100,100, 600, 400))
+    pygame.draw.rect(window, green, (125,175, 150, 300))
+    pygame.draw.rect(window, yellow, (325,175, 150, 300))
+    pygame.draw.rect(window, red, (525,175, 150, 300))
+
+    diff = font2.render(text[5],True, (0,0,0))
+    diffRect = diff.get_rect()
+    diffRect.center = (400,125)
+
+    easy = font2.render(text[2],True, (0,0,0))
+    easyRect = easy.get_rect()
+    easyRect.center = (200,300)
+
+    med = font2.render(text[3],True, (0,0,0))
+    medRect = med.get_rect()
+    medRect.center = (400,300)
+
+    hard = font2.render(text[4],True, (0,0,0))
+    hardRect = hard.get_rect()
+    hardRect.center = (600,300)
+
+
+    window.blit(title,titleRect)
+    window.blit(diff,diffRect)
+    window.blit(easy,easyRect)
+    window.blit(med,medRect)
+    window.blit(hard,hardRect)
+
+    pygame.display.update()
+    reset()
+
+    while difficulty == 0:
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == MOUSEBUTTONUP:
+                mousex,mousey = event.pos
+        if mousey > 175 and mousey < 475:
+            if mousex > 125 and mousex < 275:
+                difficulty = 3
+            elif mousex > 325 and mousex < 475:
+                difficulty = 5
+            elif mousex > 525 and mousex < 675:
+                difficulty = 7
+
+    MakeGrid()
+    DrawGrid()
+
 
 
 Init()
@@ -198,6 +257,7 @@ while True:
         window.blit(moves1, movesRect)
         if win == True:
             print("you win")
+            winScreen()
 
     if counter1 == 1:
         gridx,gridy = xcoord,ycoord
