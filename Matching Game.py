@@ -3,7 +3,7 @@ from pygame.locals import *
 
 
 def Init():
-    global window, win, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
+    global window, win, lose, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
     pygame.init()
     window = pygame.display.set_mode((800,600))
     pygame.display.set_caption('Matching Game')
@@ -14,7 +14,7 @@ def Init():
     xcoord,ycoord = -1,-1
     gridx, gridy = -1,-1
     win = False
-
+    lose = False
 
     purple = (205,205,255)
     green = (205,255,205)
@@ -162,13 +162,13 @@ def winChecker():
     if counter2 == 5*difficulty:
         win = True
 
-def reset():
-    global win, difficulty
-    win = False
-    difficulty = 0
+def loseChecker():
+    global lose
+    if moves <= 1:
+        lose = True
 
-def winScreen():
-    global difficulty
+def reset(t):
+    global win, lose, difficulty
     mousex,mousey = 0,0
 
     window.fill(blue)
@@ -177,7 +177,7 @@ def winScreen():
     pygame.draw.rect(window, yellow, (325,175, 150, 300))
     pygame.draw.rect(window, red, (525,175, 150, 300))
 
-    diff = font2.render(text[5],True, (0,0,0))
+    diff = font2.render(text[t],True, (0,0,0))
     diffRect = diff.get_rect()
     diffRect.center = (400,125)
 
@@ -201,7 +201,10 @@ def winScreen():
     window.blit(hard,hardRect)
 
     pygame.display.update()
-    reset()
+
+    win = False
+    lose = False
+    difficulty = 0
 
     while difficulty == 0:
         for event in pygame.event.get():
@@ -220,6 +223,12 @@ def winScreen():
 
     MakeGrid()
     DrawGrid()
+
+def loseScreen():
+    reset(6)
+
+def winScreen():
+    reset(5)
 
 
 
@@ -247,6 +256,7 @@ while True:
         grid[gridx][gridy] = tile
         DrawGrid()
         winChecker()
+        loseChecker()
         xcoord,ycoord,gridx,gridy = -1,-1,-1,-1
         counter1 = 0
         moves -= 1
@@ -256,8 +266,11 @@ while True:
         movesRect.center = (100,50)
         window.blit(moves1, movesRect)
         if win == True:
-            print("you win")
+            #print("you win")
             winScreen()
+        if lose == True:
+            #print("loss detected")
+            loseScreen()
 
     if counter1 == 1:
         gridx,gridy = xcoord,ycoord
