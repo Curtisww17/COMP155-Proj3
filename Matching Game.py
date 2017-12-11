@@ -256,7 +256,6 @@ while True:
         movesRect.center = (100,50)
         window.blit(moves1, movesRect)
         if win == True:
-            print("you win")
             winScreen()
 
     if counter1 == 1:
