@@ -2,7 +2,7 @@ import pygame, sys, random
 from pygame.locals import *
 
 
-def Init():
+def Init(): #initializes variables, colors, images
     global window, win, lose, counter1, xcoord, ycoord, gridx, gridy, circle, cross, triangle, square, pentagon, hexagon, rhombus, purple, green, pink, blue, red, yellow, difficulty, title, titleRect, font1, font2, text
     pygame.init()
     window = pygame.display.set_mode((800,600))
@@ -23,6 +23,7 @@ def Init():
     red = (255,75,75)
     yellow = (255,255,125)
 
+    #makes titles for different screens easier
     text = ['Matching Game','Select Difficulty','Easy','Medium','Hard', 'You Win! Play Again?', 'You Lose. Try Again?']
 
     title = font1.render(text[0],True, (0,0,0))
@@ -30,7 +31,7 @@ def Init():
     titleRect.center = (400,50)
 
 
-
+    #pust images for the cards into program
     circle = pygame.transform.scale(pygame.image.load('circle.png'),(100,100))
     cross = pygame.transform.scale(pygame.image.load('cross.png'),(100,100))
     triangle = pygame.transform.scale(pygame.image.load('triangle.png'),(100,100))
@@ -48,7 +49,7 @@ def Init():
 
 
 
-def Start():
+def Start(): #generates start screen and allows payer to select difficulty
     global difficulty
     mousex,mousey = 0,0
 
@@ -83,7 +84,7 @@ def Start():
 
     pygame.display.update()
 
-    while difficulty == 0:
+    while difficulty == 0: #player selects difficulty in this loop
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -98,33 +99,33 @@ def Start():
             elif mousex > 525 and mousex < 675:
                 difficulty = 7
 
-class Tile(object):
+class Tile(object): #used to make each tile an object with shape and color properties to be put into a list
     def __init__(self, shape, color):
         self.shape = shape
         self.color = color
 
-def MakeGrid():
+def MakeGrid(): #creates a 2d array with random tiles in rows and collums based on difficulty
     global grid, moves
     shuffleList = []
     colorlist = [red, yellow, green, blue, purple]
-    if difficulty == 3:
+    if difficulty == 3: #easy
         shapelist = [circle, cross, triangle]
-    if difficulty == 5:
+    if difficulty == 5: #medium
         shapelist = [circle, cross, triangle, square, pentagon]
-    if difficulty == 7:
+    if difficulty == 7: #hard
         shapelist = [circle, cross, triangle, square, pentagon, hexagon, rhombus]
 
     moves = difficulty*5
-    for shape in shapelist:
+    for shape in shapelist: #makes 1d list for shuffling, akso makes all the tile objects
         for color in colorlist:
             newtile = Tile(shape, color)
             shuffleList.append(newtile)
-    random.shuffle(shuffleList)
+    random.shuffle(shuffleList) #shuffles the 1d list
 
-    grid = list(splitter(shuffleList, 5))
+    grid = list(splitter(shuffleList, 5)) #turns 1d list into 2d array
 
 
-def DrawGrid():
+def DrawGrid(): #turns grid list into actual visible gui
     global offset, moves1, movesRect
     window.fill(pink)
     window.blit(title,titleRect)
@@ -145,13 +146,13 @@ def DrawGrid():
     movesRect.center = (100,50)
     window.blit(moves1, movesRect)
 
-def splitter(l, n):
+def splitter(l, n): #method used to split 1d shuffle list into 2d grid array
     # For item i in a range that is a length of l,
     for i in range(0, len(l), n):
         # Creates an index range for l of n items:
         yield l[i:i+n]
 
-def winChecker():
+def winChecker(): #checks to see if player has sorted tiles properly
     global win
     counter2 = 0
     for smalllist in grid:
@@ -162,12 +163,12 @@ def winChecker():
     if counter2 == 5*difficulty:
         win = True
 
-def loseChecker():
+def loseChecker(): #checks if user has run out of moves
     global lose
     if moves <= 1:
         lose = True
 
-def reset(t):
+def reset(t): #used to display win/loss screen and allsow user to select another difficulty (stolen form Start())
     global win, lose, difficulty
     mousex,mousey = 0,0
 
@@ -177,11 +178,11 @@ def reset(t):
     pygame.draw.rect(window, yellow, (325,175, 150, 300))
     pygame.draw.rect(window, red, (525,175, 150, 300))
 
-    diff = font2.render(text[t],True, (0,0,0))
+    diff = font2.render(text[t],True, (0,0,0)) #tells you if you won/lost
     diffRect = diff.get_rect()
     diffRect.center = (300,130)
 
-    score = font2.render("Score:" + str(moves), True, (0,0,0))
+    score = font2.render("Score:" + str(moves), True, (0,0,0)) #displays score
     scoreRect = score.get_rect()
     scoreRect.center = (600, 130)
 
@@ -241,7 +242,7 @@ Init()
 MakeGrid()
 DrawGrid()
 
-while True:
+while True: #game running loop
     for event in pygame.event.get():
         if event.type == QUIT:
             pygame.quit()
