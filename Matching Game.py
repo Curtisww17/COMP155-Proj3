@@ -179,7 +179,11 @@ def reset(t):
 
     diff = font2.render(text[t],True, (0,0,0))
     diffRect = diff.get_rect()
-    diffRect.center = (400,125)
+    diffRect.center = (300,130)
+
+    score = font2.render("Score:" + str(moves), True, (0,0,0))
+    scoreRect = score.get_rect()
+    scoreRect.center = (600, 130)
 
     easy = font2.render(text[2],True, (0,0,0))
     easyRect = easy.get_rect()
@@ -196,6 +200,7 @@ def reset(t):
 
     window.blit(title,titleRect)
     window.blit(diff,diffRect)
+    window.blit(score, scoreRect)
     window.blit(easy,easyRect)
     window.blit(med,medRect)
     window.blit(hard,hardRect)
